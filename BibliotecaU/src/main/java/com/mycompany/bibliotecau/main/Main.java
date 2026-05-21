@@ -8,6 +8,8 @@ package com.mycompany.bibliotecau.main;
 import com.mycompany.bibliotecau.model.Libro;
 import com.mycompany.bibliotecau.model.Usuario;
 import com.mycompany.bibliotecau.model.Prestamo;
+import com.mycompany.bibliotecau.structures.ListaPrestamos;
+import com.mycompany.bibliotecau.structures.NodoPrestamo;
 
 public class Main {
 
@@ -32,5 +34,18 @@ public class Main {
         );
 
         System.out.println(usuario);
+        
+        Prestamo prestamo = new Prestamo(
+            1,
+            libro,
+            usuario,
+            "10/08/2025"
+        ); 
+        
+        ListaPrestamos lista = new ListaPrestamos();
+
+        lista.agregarPrestamo(prestamo);
+
+        lista.mostrarPrestamos();
     }
 }
