@@ -12,37 +12,49 @@ import com.mycompany.bibliotecau.structures.ListaPrestamos;
 import com.mycompany.bibliotecau.structures.NodoPrestamo;
 import com.mycompany.bibliotecau.structures.PilaHistorial;
 import com.mycompany.bibliotecau.structures.ColaEspera;
+import com.mycompany.bibliotecau.structures.NodoLibro;
+import com.mycompany.bibliotecau.structures.ArbolLibroBST;
 
 public class Main {
 
     public static void main(String[] args) {
-        Usuario usuario1 = new Usuario(
-        "20240001",
-        "Angel",
-        "Ingenieria");
-        
-        Usuario usuario2 = new Usuario(
-        "20240002",
-        "Maria",
-        "Administracion");
-        
-        Usuario usuario3 = new Usuario(
-        "20240003",
-        "Jose",
-        "Sistemas");
-        
-        ColaEspera cola = new ColaEspera();
-        cola.enqueue(usuario1); 
-        cola.enqueue(usuario2);
-        cola.enqueue(usuario3);
 
-        System.out.println("Usuarios en cola:");
-        cola.mostrarCola();
-        
-        System.out.println("\nAtendiendo:");
-        System.out.println(cola.dequeue());
-        
-        System.out.println("\nCola actual:");
-        cola.mostrarCola();
+    Libro libro1 = new Libro(
+        50,
+        "111",
+        "Java",
+        "Autor 1",
+        "Programacion");
+    
+    Libro libro2 = new Libro(
+        30,
+        "222",
+        "Estructuras",
+        "Autor 2",
+        "Programacion");
+    
+    Libro libro3 = new Libro(
+        70,
+        "333",
+        "Bases de Datos",
+        "Autor 3",
+        "Base de Datos");
+    
+    ArbolLibroBST arbol = new ArbolLibroBST();
+
+    arbol.insertar(libro1);
+    arbol.insertar(libro2);
+    arbol.insertar(libro3);
+    
+    System.out.println("Libros ordenados:");
+    arbol.mostrarInOrden();
+    
+    System.out.println("\nBusqueda:");
+    
+    Libro encontrado = arbol.buscar(70);
+    
+    if (encontrado != null) {
+        System.out.println(encontrado);
+    }
     }
 }
