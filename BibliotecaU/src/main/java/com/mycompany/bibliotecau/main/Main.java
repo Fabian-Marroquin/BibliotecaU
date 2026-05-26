@@ -15,30 +15,41 @@ import com.mycompany.bibliotecau.structures.ColaEspera;
 import com.mycompany.bibliotecau.structures.NodoLibro;
 import com.mycompany.bibliotecau.structures.ArbolLibroBST;
 import com.mycompany.bibliotecau.structures.GrafoLibros;
+import com.mycompany.bibliotecau.service.BibliotecaService;
 
 public class Main {
     public static void main(String[] args) {
-    GrafoLibros grafo = new GrafoLibros();
-    
-    grafo.agregarRelacion(
-        "Java Basico",
-        "Java Avanzado"
-    );
-    
-    grafo.agregarRelacion(
-        "Java Avanzado",
-        "Estructuras de Datos"
-    );
-    
-    grafo.agregarRelacion(
-        "Estructuras de Datos",
-        "Algoritmos"
-    );
-    
-    grafo.mostrarGrafo();
 
-    System.out.println();
+        BibliotecaService biblioteca =
+        new BibliotecaService();
 
-    grafo.mostrarRelacionados("Java Avanzado");
-    }
+        Usuario usuario = new Usuario(
+            "20240001",
+            "Angel",
+            "Ingenieria"
+        );
+        
+        biblioteca.registrarUsuario(usuario);
+        
+        Libro libro = new Libro(
+            1,
+            "978123",
+            "Java Basico",
+            "Juan Perez",
+            "Programacion"
+        );
+
+        biblioteca.registrarLibro(libro);
+
+        biblioteca.mostrarUsuarios();
+
+        System.out.println();
+
+        biblioteca.mostrarLibros();
+
+        System.out.println();
+
+        biblioteca.mostrarHistorial();
+        
+    }    
 }
