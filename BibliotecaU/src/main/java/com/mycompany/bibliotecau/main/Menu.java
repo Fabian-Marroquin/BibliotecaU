@@ -81,6 +81,10 @@ public class Menu {
                     mostrarRelacionados();
                     break;
 
+                case 13:
+                    eliminarLibro();
+                    break;
+
                 case 0:
                     System.out.println("Saliendo...");
                     break;
@@ -107,6 +111,7 @@ public class Menu {
         System.out.println("10. Ver historial");
         System.out.println("11. Ver  cola de espera");
         System.out.println("12. Ver libros relacionados");
+        System.out.println("13. Eliminar libro");
         System.out.println("0. Salir");
     }
 
@@ -223,5 +228,13 @@ public class Menu {
 
         biblioteca.mostrarRelacionesLibros(titulo);
     }
+
+    private void eliminarLibro() {
+
+        System.out.print("Codigo del libro: ");
+        int codigo = Integer.parseInt(scanner.nextLine());
+
+        biblioteca.eliminarLibro(codigo);
+    }   
     
 }

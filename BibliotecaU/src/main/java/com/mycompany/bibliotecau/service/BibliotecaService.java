@@ -243,4 +243,23 @@ public class BibliotecaService {
             libro2
         );
     }
+    
+    public void eliminarLibro(int codigo) {
+
+        Libro libro = arbolLibros.buscar(codigo);
+
+        if (libro == null) {
+            System.out.println("Libro no encontrado");
+            return;
+        }
+
+        arbolLibros.eliminar(codigo);
+        librosPorISBN.remove(libro.getIsbn());
+
+        historial.push(
+            "Libro eliminado: " + libro.getTitulo()
+        );
+
+        System.out.println("Libro eliminado correctamente");
+    }
 }

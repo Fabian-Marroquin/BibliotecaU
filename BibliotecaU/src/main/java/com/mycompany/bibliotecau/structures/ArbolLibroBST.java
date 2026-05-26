@@ -73,4 +73,56 @@ public class ArbolLibroBST {
             mostrarInOrdenRecursivo(nodo.getDerecha());
         }
     }
+    
+    public void eliminar(int codigo) {
+        raiz = eliminarRecursivo(raiz, codigo);
+    }
+
+    private NodoLibro eliminarRecursivo(NodoLibro nodo, int codigo) {
+
+        if (nodo == null) {
+            return null;
+        }
+
+        if (codigo < nodo.getLibro().getCodigo()) {
+            nodo.setIzquierda( eliminarRecursivo(nodo.getIzquierda(), codigo));
+        } else if (codigo > nodo.getLibro().getCodigo()) {
+            nodo.setDerecha( eliminarRecursivo(nodo.getDerecha(), codigo));
+
+        } else {
+
+            // caso 1: sin hijos
+            if (nodo.getIzquierda() == null && nodo.getDerecha() == null) {
+                return null;
+            }
+
+            // caso 2: un hijo
+            if (nodo.getIzquierda() == null) {
+                return nodo.getDerecha();
+            }
+
+            if (nodo.getDerecha() == null) {
+                return nodo.getIzquierda();
+            }
+
+            // caso 3: dos hijos
+            NodoLibro sucesor = encontrarMin(nodo.getDerecha());
+                nodo.setLibro(sucesor.getLibro());
+                nodo.setDerecha(
+                eliminarRecursivo(nodo.getDerecha(), sucesor.getLibro().getCodigo())
+            );
+        }
+
+        return nodo;
+    }
+
+    private NodoLibro encontrarMin(NodoLibro nodo) {
+
+        while (nodo.getIzquierda() != null) {
+            nodo = nodo.getIzquierda();
+        }
+
+        return nodo;
+    }
+    
 }
