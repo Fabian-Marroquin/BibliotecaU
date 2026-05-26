@@ -155,9 +155,11 @@ public class BibliotecaService {
     
     //registrar la devolucion del libro
     public void registrarDevolucion(int idPrestamo) {
+
         Prestamo prestamo = prestamos.buscarPrestamo(idPrestamo);
-        
+
         if (prestamo == null) {
+
             System.out.println("Prestamo no encontrado");
             return;
         }
@@ -166,11 +168,37 @@ public class BibliotecaService {
 
         Libro libro = prestamo.getLibro();
 
-        libro.setDisponible(true);
-
         historial.push(
             "Devolucion registrada: " + libro.getTitulo()
         );
+
+        if (!colaEspera.estaVacia()) {
+
+            Usuario siguienteUsuario = colaEspera.dequeue();
+
+            Prestamo nuevoPrestamo = new Prestamo(
+                contadorPrestamos++,
+                libro,
+                siguienteUsuario,
+                "Pendiente"
+            );
+
+            prestamos.agregarPrestamo(nuevoPrestamo);
+
+            libro.setDisponible(false);
+
+            historial.push(
+                "Libro asignado desde cola a: "
+                + siguienteUsuario.getNombre()
+            );
+
+            System.out.println(
+                "Libro asignado automaticamente a "  + siguienteUsuario.getNombre()
+            );
+
+        } else {
+            libro.setDisponible(true);
+        }
 
         System.out.println("Devolucion realizada");
     }  

@@ -19,15 +19,23 @@ import com.mycompany.bibliotecau.service.BibliotecaService;
 
 public class Main {
     public static void main(String[] args) {
+        
         BibliotecaService biblioteca = new BibliotecaService();
 
-        Usuario usuario = new Usuario(
+        Usuario u1 = new Usuario(
             "20240001",
             "Angel",
             "Ingenieria"
         );
 
-        biblioteca.registrarUsuario(usuario);
+        Usuario u2 = new Usuario(
+            "20240002",
+            "Maria",
+            "Administracion"
+        );
+
+        biblioteca.registrarUsuario(u1);
+        biblioteca.registrarUsuario(u2);
 
         Libro libro = new Libro(
             1,
@@ -42,19 +50,17 @@ public class Main {
         biblioteca.registrarPrestamo(
             1,
             "20240001",
-            "10/05/2026"
+            "24/05/2026"
         );
 
-        System.out.println();
-
-        biblioteca.mostrarPrestamos();
-
-        System.out.println();
+        biblioteca.registrarPrestamo(
+            1,
+            "20240002",
+            "24/05/2026"
+        );
 
         biblioteca.registrarDevolucion(1);
 
-        System.out.println();
-
-        biblioteca.mostrarHistorial();
+        biblioteca.mostrarPrestamos();
     }
 }
