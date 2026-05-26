@@ -6,6 +6,7 @@ package com.mycompany.bibliotecau.service;
  */
 
 import com.mycompany.bibliotecau.model.Libro;
+import com.mycompany.bibliotecau.model.Prestamo;
 import com.mycompany.bibliotecau.model.Usuario;
 import com.mycompany.bibliotecau.structures.ArbolLibroBST;
 import com.mycompany.bibliotecau.structures.ColaEspera;
@@ -14,8 +15,10 @@ import com.mycompany.bibliotecau.structures.ListaPrestamos;
 import com.mycompany.bibliotecau.structures.PilaHistorial;
 import java.util.HashMap;
 
-public class BibliotecaService {
 
+
+public class BibliotecaService {
+    
     private ArbolLibroBST arbolLibros;
     private HashMap<String, Usuario> usuarios;
     private ListaPrestamos prestamos;
@@ -23,6 +26,8 @@ public class BibliotecaService {
     private ColaEspera colaEspera;
     private GrafoLibros grafo;
 
+    private int contadorPrestamos;
+    
     public BibliotecaService() {
 
         arbolLibros = new ArbolLibroBST();
@@ -31,6 +36,7 @@ public class BibliotecaService {
         historial = new PilaHistorial();
         colaEspera = new ColaEspera();
         grafo = new GrafoLibros();
+        contadorPrestamos = 1;
     }
     
     //agregar registro de usuario
@@ -104,4 +110,73 @@ public class BibliotecaService {
         colaEspera.mostrarCola();
     }
     
+    //registrar el prestamo
+    public void registrarPrestamo(int codigoLibro, String carnetUsuario, String fecha) {
+        Libro libro = buscarLibro(codigoLibro);
+        Usuario usuario = buscarUsuario(carnetUsuario);
+        
+        if (libro == null) {
+            System.out.println("Libro no encontrado");
+            return;
+        }
+
+        if (usuario == null) {
+            System.out.println("Usuario no encontrado");
+            return;
+        }
+
+        if (!libro.isDisponible()) {
+            System.out.println("Libro no disponible, usuario agregado a cola de espera"
+        );
+
+        colaEspera.enqueue(usuario);
+
+        historial.push(
+            "Usuario agregado a cola: " + usuario.getNombre()
+        );
+
+        return;
+    }
+
+    Prestamo prestamo = new Prestamo(
+            contadorPrestamos++, libro, usuario, fecha
+    );
+
+    prestamos.agregarPrestamo(prestamo);
+
+    libro.setDisponible(false);
+
+    historial.push(
+            "Prestamo registrado: " + libro.getTitulo()
+    );
+    
+    System.out.println("Prestamo realizado");
+    }
+    
+    //registrar la devolucion del libro
+    public void registrarDevolucion(int idPrestamo) {
+        Prestamo prestamo = prestamos.buscarPrestamo(idPrestamo);
+        
+        if (prestamo == null) {
+            System.out.println("Prestamo no encontrado");
+            return;
+        }
+
+        prestamos.eliminarPrestamo(idPrestamo);
+
+        Libro libro = prestamo.getLibro();
+
+        libro.setDisponible(true);
+
+        historial.push(
+            "Devolucion registrada: " + libro.getTitulo()
+        );
+
+        System.out.println("Devolucion realizada");
+    }  
+    
+   //mostrar los prestamos
+    public void mostrarPrestamos() {
+        prestamos.mostrarPrestamos();
+    }
 }
