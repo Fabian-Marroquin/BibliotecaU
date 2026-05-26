@@ -28,6 +28,8 @@ public class BibliotecaService {
 
     private int contadorPrestamos;
     
+    private HashMap<String, Libro> librosPorISBN;
+    
     public BibliotecaService() {
 
         arbolLibros = new ArbolLibroBST();
@@ -37,6 +39,8 @@ public class BibliotecaService {
         colaEspera = new ColaEspera();
         grafo = new GrafoLibros();
         contadorPrestamos = 1;
+        
+        librosPorISBN = new HashMap<>();
     }
     
     //agregar registro de usuario
@@ -78,15 +82,17 @@ public class BibliotecaService {
     //guardar libro
     public void registrarLibro(Libro libro) {
 
-    arbolLibros.insertar(libro);
-
-    historial.push(
+        arbolLibros.insertar(libro);
+        
+        librosPorISBN.put(libro.getIsbn(), libro);
+        
+        historial.push(
             "Libro registrado: " + libro.getTitulo()
-    );
+        );
 
-    grafo.agregarLibro(
+        grafo.agregarLibro(
             libro.getTitulo()
-    );
+        );
     }
     
     //busar libro
@@ -94,6 +100,20 @@ public class BibliotecaService {
         return arbolLibros.buscar(codigo);
     }
     
+    public Libro buscarLibroPorISBN(String isbn){
+        return librosPorISBN.get(isbn);
+    }
+    
+    public Libro buscarLibroPorTitulo(String titulo){
+        
+        for(Libro libro : librosPorISBN.values()){
+            if (libro.getTitulo().equalsIgnoreCase(titulo)){
+                return libro;
+            }
+        }
+        
+        return null;
+    }
     
     //mostar libro
     public void mostrarLibros() {

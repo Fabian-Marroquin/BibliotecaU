@@ -18,49 +18,11 @@ import com.mycompany.bibliotecau.structures.GrafoLibros;
 import com.mycompany.bibliotecau.service.BibliotecaService;
 
 public class Main {
+
     public static void main(String[] args) {
-        
-        BibliotecaService biblioteca = new BibliotecaService();
 
-        Usuario u1 = new Usuario(
-            "20240001",
-            "Angel",
-            "Ingenieria"
-        );
+        Menu menu = new Menu();
+        menu.iniciar();
 
-        Usuario u2 = new Usuario(
-            "20240002",
-            "Maria",
-            "Administracion"
-        );
-
-        biblioteca.registrarUsuario(u1);
-        biblioteca.registrarUsuario(u2);
-
-        Libro libro = new Libro(
-            1,
-            "978123",
-            "Java Basico",
-            "Juan Perez",
-            "Programacion"
-        );
-
-        biblioteca.registrarLibro(libro);
-
-        biblioteca.registrarPrestamo(
-            1,
-            "20240001",
-            "24/05/2026"
-        );
-
-        biblioteca.registrarPrestamo(
-            1,
-            "20240002",
-            "24/05/2026"
-        );
-
-        biblioteca.registrarDevolucion(1);
-
-        biblioteca.mostrarPrestamos();
     }
 }
