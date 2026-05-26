@@ -73,6 +73,14 @@ public class Menu {
                     biblioteca.mostrarHistorial();
                     break;
 
+                case 11:
+                    biblioteca.mostrarColaEspera();
+                    break;
+                
+                case 12:
+                    mostrarRelacionados();
+                    break;
+
                 case 0:
                     System.out.println("Saliendo...");
                     break;
@@ -97,6 +105,8 @@ public class Menu {
         System.out.println("8. Registrar prestamo");
         System.out.println("9. Registrar devolucion");
         System.out.println("10. Ver historial");
+        System.out.println("11. Ver  cola de espera");
+        System.out.println("12. Ver libros relacionados");
         System.out.println("0. Salir");
     }
 
@@ -205,4 +215,13 @@ public class Menu {
             System.out.println("Libro no encontrado");
         }
     }
+    
+    private void mostrarRelacionados() {
+
+        System.out.print("Titulo del libro: ");
+        String titulo = scanner.nextLine();
+
+        biblioteca.mostrarRelacionesLibros(titulo);
+    }
+    
 }

@@ -130,6 +130,8 @@ public class BibliotecaService {
         colaEspera.mostrarCola();
     }
     
+    
+    
     //registrar el prestamo
     public void registrarPrestamo(int codigoLibro, String carnetUsuario, String fecha) {
         Libro libro = buscarLibro(codigoLibro);
@@ -226,5 +228,19 @@ public class BibliotecaService {
    //mostrar los prestamos
     public void mostrarPrestamos() {
         prestamos.mostrarPrestamos();
+    }
+    
+    //mostrar realacioens
+    public void mostrarRelacionesLibros(String titulo) {
+        grafo.mostrarRelacionados(titulo);
+    }
+    
+    //agregar relacion entre libros
+    public void agregarRelacionEntreLibros(String libro1, String libro2) {
+
+        grafo.agregarRelacion(
+            libro1,
+            libro2
+        );
     }
 }
